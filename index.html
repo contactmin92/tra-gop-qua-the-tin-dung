@@ -999,522 +999,848 @@
       gap: 5px;
       background: var(--gray-100);
       border: 1px solid var(--gray-200);
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 11px;
-      color: var(--gray-600);
-      margin-bottom: 16px;
-      flex-shrink: 0;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--gray-700);
+      margin-bottom: 20px;
     }
-    .home-btn {
-      padding: 12px 32px;
+    .order-details-card {
+      width: 100%;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .order-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 12px;
+    }
+    .order-detail-row:last-child { border-bottom: none; }
+    .order-detail-key { color: var(--gray-500); }
+    .order-detail-val { color: var(--gray-900); font-weight: 500; }
+    .order-detail-val.bold { font-weight: 700; }
+    .result-ctas {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .cta-primary {
+      width: 100%;
+      height: 48px;
       border-radius: 10px;
       background: var(--gray-900);
       color: var(--white);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       border: none;
-      flex-shrink: 0;
+    }
+    .cta-secondary {
+      width: 100%;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--gray-700);
+      font-size: 14px;
+      font-weight: 500;
+      border: 1.5px solid var(--gray-300);
+    }
+    .result-error-msg {
+      font-size: 13px;
+      color: var(--gray-600);
+      text-align: center;
+      line-height: 1.5;
+      padding: 0 8px;
+      margin-bottom: 6px;
+    }
+    .result-error-code {
+      font-size: 11px;
+      color: var(--gray-400);
+      text-align: center;
+      margin-bottom: 20px;
     }
 
+    /* ============================================================
+       11. SKELETON / LOADING
+    ============================================================ */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+    .skeleton-box {
+      background: linear-gradient(
+        90deg,
+        var(--gray-200) 25%,
+        var(--gray-100) 50%,
+        var(--gray-200) 75%
+      );
+      background-size: 800px 100%;
+      animation: shimmer 1.4s infinite linear;
+      border-radius: 4px;
+      display: block;
+    }
+    .bank-chip.skel { border-color: var(--gray-200); }
+    .card-type-chip.skel {
+      border-color: var(--gray-200);
+      background: var(--gray-200);
+      color: transparent;
     }
   </style>
 </head>
 <body>
+
   <div class="page-header">
-    <h1 class="page-title">FPT Shop – Trả góp qua thẻ tín dụng</h1>
-    <p class="page-subtitle">Credit Card Installment Flow - UX Wireframe</p>
+    <h1 class="page-title">Trả góp qua thẻ tín dụng – Wireframe</h1>
+    <p class="page-subtitle">FPT Shop Mobile App &nbsp;·&nbsp; Grayscale Mockup &nbsp;·&nbsp; 12 Screen States</p>
+  </div>
+
+  <!-- ============================================================
+       SCREEN GROUP 1: PRODUCT DETAIL
+  ============================================================ -->
+  <div class="group-divider">
+    <span class="group-divider-label">Screen Group 1 — Product Detail</span>
+    <span class="group-divider-line"></span>
   </div>
 
   <div class="page-wrapper">
-    <!-- Screen 1: Product Detail - No Installment -->
-    <div class="screen-group">
-      <div class="screen-label">
-        <span class="screen-number">1</span>
-        Product Detail - No Installment
-      </div>
-      <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
-          <span>9:41</span>
-          <div class="status-icons">
-            <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <span>📶</span>
-            <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
-              <div class="battery-tip"></div>
-            </div>
-          </div>
-        </div>
-        <div class="screen-content">
-          <div class="navbar">
-            <div class="navbar-back">‹</div>
-            <div class="navbar-title">Product</div>
-            <div class="navbar-spacer"></div>
-          </div>
-          <div class="product-image-placeholder">
-            <svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-          </div>
-          <div class="product-info">
-            <div class="product-name">Samsung Galaxy S24 Ultra</div>
-            <div class="product-price-row">
-              <span class="product-price">29,990,000 ₫</span>
-              <span class="product-price-original">34,990,000 ₫</span>
-            </div>
-          </div>
-          <div class="payment-tabs">
-            <div class="payment-tab active">Full Payment</div>
-            <div class="payment-tab">Installment</div>
-          </div>
-          <div class="content-spacer"></div>
-          <div class="sticky-footer">
-            <div>
-              <div class="footer-total-label">Total</div>
-              <div class="footer-total-amount">29,990,000 ₫</div>
-            </div>
-            <button class="footer-cta">Add to Cart</button>
-          </div>
-        </div>
-        <div class="iphone-home-indicator"></div>
-      </div>
-    </div>
 
-    <!-- Screen 2: Product Detail - Installment Tab -->
+    <!-- ── SCREEN 1a: Product Detail – Có thẻ liên kết ── -->
     <div class="screen-group">
       <div class="screen-label">
-        <span class="screen-number">2</span>
-        Product Detail - Installment Available
+        <span class="screen-number">1a</span>Product Detail – Có thẻ liên kết
       </div>
       <div class="iphone-frame">
         <div class="iphone-notch"></div>
+
+        <!-- Status Bar -->
         <div class="iphone-status-bar">
           <span>9:41</span>
           <div class="status-icons">
             <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
+              <span style="height:4px"></span>
+              <span style="height:6px"></span>
+              <span style="height:8px"></span>
+              <span style="height:11px"></span>
             </div>
-            <span>📶</span>
-            <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
-              <div class="battery-tip"></div>
-            </div>
-          </div>
-        </div>
-        <div class="screen-content">
-          <div class="navbar">
-            <div class="navbar-back">‹</div>
-            <div class="navbar-title">Product</div>
-            <div class="navbar-spacer"></div>
-          </div>
-          <div class="product-image-placeholder">
-            <svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-          </div>
-          <div class="product-info">
-            <div class="product-name">Samsung Galaxy S24 Ultra</div>
-            <div class="product-price-row">
-              <span class="product-price">29,990,000 ₫</span>
-              <span class="product-price-original">34,990,000 ₫</span>
-            </div>
-          </div>
-          <div class="payment-tabs">
-            <div class="payment-tab">Full Payment</div>
-            <div class="payment-tab active">Installment</div>
-          </div>
-          
-          <div class="link-card-prompt">
-            <svg class="link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
             </svg>
-            <div class="link-card-text">Link your credit card to use installment payment</div>
-            <button class="link-card-btn">Link Card</button>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen Content -->
+        <div class="screen-content">
+
+          <!-- Navbar -->
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Chi tiết sản phẩm</div>
+            <div class="navbar-spacer"></div>
           </div>
 
+          <!-- Product Image -->
+          <div class="product-image-placeholder">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="8" y="12" width="40" height="32" rx="3" stroke="#9e9e9e" stroke-width="2"/>
+              <circle cx="21" cy="24" r="5" stroke="#9e9e9e" stroke-width="2"/>
+              <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#9e9e9e" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <div class="product-name">iPhone 15 Pro Max 256GB<br>Titan Tự Nhiên</div>
+            <div class="product-price-row">
+              <span class="product-price">28.990.000đ</span>
+              <span class="product-price-original">32.990.000đ</span>
+            </div>
+          </div>
+
+          <!-- Payment Method Tabs -->
+          <div class="payment-tabs">
+            <div class="payment-tab">Trả thẳng</div>
+            <div class="payment-tab active">Trả góp qua thẻ</div>
+          </div>
+
+          <!-- Installment Summary Card (Linked Card) -->
+          <div class="installment-summary-card">
+            <div class="card-bank-row">
+              <div class="bank-logo-sm"></div>
+              <span class="card-bank-name">Vietcombank</span>
+              <span class="card-number-badge">•••• 4242 Visa</span>
+            </div>
+            <div class="card-monthly-row">
+              <span class="card-monthly-amount">Từ 874.583đ/tháng</span>
+              <span class="card-monthly-label">trong 24 tháng</span>
+            </div>
+            <div>
+              <span class="card-detail-link">Xem chi tiết ›</span>
+            </div>
+          </div>
+
+          <!-- Other payment options (collapsed rows) -->
           <div class="other-payments-section">
-            <div class="other-payments-label">Other Payment Methods</div>
+            <div class="other-payments-label">Phương thức khác</div>
             <div class="other-payment-row">
               <div class="radio-circle"></div>
-              <div class="other-payment-name">Debit Card</div>
+              <span class="other-payment-name">Trả góp 0% qua công ty tài chính</span>
             </div>
             <div class="other-payment-row">
               <div class="radio-circle"></div>
-              <div class="other-payment-name">Bank Transfer</div>
+              <span class="other-payment-name">Ví điện tử / QR Pay</span>
             </div>
           </div>
 
           <div class="content-spacer"></div>
+
+          <!-- Sticky Footer -->
           <div class="sticky-footer">
             <div>
-              <div class="footer-total-label">Total</div>
-              <div class="footer-total-amount">29,990,000 ₫</div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">28.990.000đ</div>
             </div>
-            <button class="footer-cta disabled">Select Payment</button>
+            <button class="footer-cta">Mua trả góp</button>
           </div>
-        </div>
-        <div class="iphone-home-indicator"></div>
-      </div>
-    </div>
 
-    <!-- Screen 3: Installment Plan Selection -->
+        </div><!-- /screen-content -->
+        <div class="iphone-home-indicator"></div>
+      </div><!-- /iphone-frame -->
+    </div><!-- /screen-group 1a -->
+
+
+    <!-- ── SCREEN 1b: Product Detail – Chưa liên kết thẻ ── -->
     <div class="screen-group">
       <div class="screen-label">
-        <span class="screen-number">3</span>
-        Select Installment Plan
+        <span class="screen-number">1b</span>Product Detail – Chưa liên kết thẻ
       </div>
       <div class="iphone-frame">
         <div class="iphone-notch"></div>
+
+        <!-- Status Bar -->
         <div class="iphone-status-bar">
           <span>9:41</span>
           <div class="status-icons">
             <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
+              <span style="height:4px"></span>
+              <span style="height:6px"></span>
+              <span style="height:8px"></span>
+              <span style="height:11px"></span>
             </div>
-            <span>📶</span>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
             <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen Content -->
+        <div class="screen-content">
+
+          <!-- Navbar -->
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Chi tiết sản phẩm</div>
+            <div class="navbar-spacer"></div>
+          </div>
+
+          <!-- Product Image -->
+          <div class="product-image-placeholder">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="8" y="12" width="40" height="32" rx="3" stroke="#9e9e9e" stroke-width="2"/>
+              <circle cx="21" cy="24" r="5" stroke="#9e9e9e" stroke-width="2"/>
+              <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#9e9e9e" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <div class="product-name">iPhone 15 Pro Max 256GB<br>Titan Tự Nhiên</div>
+            <div class="product-price-row">
+              <span class="product-price">28.990.000đ</span>
+              <span class="product-price-original">32.990.000đ</span>
+            </div>
+          </div>
+
+          <!-- Payment Method Tabs -->
+          <div class="payment-tabs">
+            <div class="payment-tab">Trả thẳng</div>
+            <div class="payment-tab active">Trả góp qua thẻ</div>
+          </div>
+
+          <!-- Link Card Prompt (Unlinked State) -->
+          <div class="link-card-prompt">
+            <!-- Credit card SVG icon -->
+            <svg class="link-card-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="8" width="32" height="20" rx="3"/>
+              <line x1="2" y1="15" x2="34" y2="15"/>
+              <line x1="7" y1="22" x2="13" y2="22"/>
+              <line x1="17" y1="22" x2="20" y2="22"/>
+            </svg>
+            <div class="link-card-text">
+              Liên kết thẻ tín dụng để xem<br>ưu đãi trả góp hấp dẫn
+            </div>
+            <button class="link-card-btn">Liên kết thẻ ngay</button>
+          </div>
+
+          <!-- Other payment options -->
+          <div class="other-payments-section">
+            <div class="other-payments-label">Phương thức khác</div>
+            <div class="other-payment-row">
+              <div class="radio-circle"></div>
+              <span class="other-payment-name">Trả góp 0% qua công ty tài chính</span>
+            </div>
+            <div class="other-payment-row">
+              <div class="radio-circle"></div>
+              <span class="other-payment-name">Ví điện tử / QR Pay</span>
+            </div>
+          </div>
+
+          <div class="content-spacer"></div>
+
+          <!-- Sticky Footer -->
+          <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">28.990.000đ</div>
+            </div>
+            <button class="footer-cta">Mua trả góp</button>
+          </div>
+
+        </div><!-- /screen-content -->
+        <div class="iphone-home-indicator"></div>
+      </div><!-- /iphone-frame -->
+    </div><!-- /screen-group 1b -->
+
+  </div><!-- /page-wrapper -->
+
+  </div><!-- /page-wrapper sg1 -->
+
+  <!-- ============================================================
+       SCREEN GROUP 2: ORDER CONFIRMATION
+  ============================================================ -->
+  <div class="group-divider" style="margin-top:40px">
+    <span class="group-divider-label">Screen Group 2 — Order Confirmation</span>
+    <span class="group-divider-line"></span>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- ── SCREEN 2a: Order Confirmation – Bình thường ── -->
+    <div class="screen-group">
+      <div class="screen-label"><span class="screen-number">2a</span>Order Confirmation – Bình thường</div>
+      <div class="iphone-frame">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span>
+              <span style="height:6px"></span>
+              <span style="height:8px"></span>
+              <span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
               <div class="battery-tip"></div>
             </div>
           </div>
         </div>
         <div class="screen-content">
           <div class="navbar">
-            <div class="navbar-back">‹</div>
-            <div class="navbar-title">Installment Plans</div>
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
             <div class="navbar-spacer"></div>
           </div>
-
-          <div class="section-header">Select Bank</div>
+                    <!-- Product Summary -->
+          <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
+            </div>
+          </div>
+                    <!-- Section Header -->
+          <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <!-- Bank Selector -->
           <div class="bank-selector">
             <div class="bank-chip selected">
-              <div class="bank-chip-logo">MB</div>
-              <div class="bank-chip-name">MB Bank</div>
+              <div class="bank-chip-logo">VCB</div>
+              <div class="bank-chip-name">Vietcombank</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">TCB</div>
+              <div class="bank-chip-name">Techcombank</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">VPB</div>
+              <div class="bank-chip-name">VPBank</div>
             </div>
             <div class="bank-chip">
               <div class="bank-chip-logo">ACB</div>
               <div class="bank-chip-name">ACB</div>
             </div>
             <div class="bank-chip">
-              <div class="bank-chip-logo">VTB</div>
-              <div class="bank-chip-name">Vietcombank</div>
+              <div class="bank-chip-logo">BID</div>
+              <div class="bank-chip-name">BIDV</div>
             </div>
             <div class="bank-chip">
-              <div class="bank-chip-logo">TP</div>
-              <div class="bank-chip-name">TPBank</div>
+              <div class="bank-chip-logo">MB</div>
+              <div class="bank-chip-name">MB Bank</div>
             </div>
           </div>
-
-          <div class="section-header">Select Card Type</div>
+                    <!-- Card Type Selector -->
           <div class="card-type-selector">
-            <div class="card-type-chip selected">Credit Card</div>
-            <div class="card-type-chip">Debit Card</div>
+            <div class="card-type-chip selected">Visa</div>
+            <div class="card-type-chip">Mastercard</div>
+            <div class="card-type-chip">JCB</div>
+            <div class="card-type-chip">Napas</div>
           </div>
-
+                    <!-- Amount Dropdown -->
           <div class="amount-dropdown-wrap">
-            <label class="amount-dropdown-label">Installment Amount</label>
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
             <div class="amount-dropdown">
-              <span>Full Amount: 29,990,000 ₫</span>
-              <svg class="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M6 9l6 6 6-6"/>
+              <span>20.990.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2">
+                <polyline points="4,6 8,10 12,6"/>
               </svg>
             </div>
           </div>
-
+                    <!-- Installment Term Table -->
           <div class="installment-table-wrap">
             <table class="installment-table">
               <thead>
                 <tr>
-                  <th>Months</th>
-                  <th>Monthly</th>
-                  <th class="best-col"><span class="best-badge">Best</span>0%</th>
-                  <th>Interest</th>
+                  <th style="width:28%"></th>
+                  <th>3 tháng</th>
+                  <th>6 tháng</th>
+                  <th class="best-col"><span class="best-badge">Thấp nhất</span>12 tháng</th>
+                  <th>24 tháng</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="row-label">3</td>
-                  <td>9,996,667 ₫</td>
-                  <td>0%</td>
-                  <td>0 ₫</td>
+                  <td class="row-label">Giá mua TG</td>
+                  <td>20.990k</td><td>20.990k</td><td>20.990k</td><td>20.990k</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Tổng giảm giá</td>
+                  <td>-500k</td><td>-300k</td><td>-200k</td><td>0đ</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Tổng tiền TG</td>
+                  <td>20.490k</td><td>20.690k</td><td>20.790k</td><td>20.990k</td>
+                </tr>
+                <tr>
+                  <td class="row-label">TT khi nhận</td>
+                  <td>0đ</td><td>0đ</td><td>0đ</td><td>0đ</td>
                 </tr>
                 <tr class="highlight-row">
-                  <td class="row-label">6</td>
-                  <td>4,998,334 ₫</td>
-                  <td>0%</td>
-                  <td>0 ₫</td>
+                  <td class="row-label">Góp/tháng</td>
+                  <td>6.830k</td><td>3.448k</td><td>1.733k</td><td>875k</td>
                 </tr>
                 <tr>
-                  <td class="row-label">9</td>
-                  <td>3,332,222 ₫</td>
-                  <td>1.5%</td>
-                  <td>449,890 ₫</td>
-                </tr>
-                <tr>
-                  <td class="row-label">12</td>
-                  <td>2,499,167 ₫</td>
-                  <td>2.0%</td>
-                  <td>599,800 ₫</td>
+                  <td class="row-label">Chênh lệch</td>
+                  <td>-500k</td><td>-300k</td><td>-200k</td><td>0đ</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
+                    <!-- Promotion Banner -->
           <div class="promo-banner">
-            <span class="promo-icon">ℹ️</span>
-            <span>Choose 6-month installment and get 0% interest</span>
+            <span class="promo-icon">🏷</span>
+            <span>Ưu đãi: Giảm thêm 200.000đ khi trả góp 12 tháng qua Vietcombank</span>
           </div>
-
           <div class="content-spacer"></div>
+                    <!-- Sticky Footer -->
           <div class="sticky-footer">
             <div>
-              <div class="footer-total-label">Monthly Payment</div>
-              <div class="footer-total-amount">4,998,334 ₫</div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">20.990.000đ</div>
             </div>
-            <button class="footer-cta">Continue</button>
+            <button class="footer-cta">Tiếp tục</button>
           </div>
         </div>
-        <div class="iphone-home-indicator"></div>
+                <div class="iphone-home-indicator"></div>
       </div>
     </div>
 
-    <!-- Screen 4: Payment Gateway -->
+    <!-- ── SCREEN 2b: Order Confirmation – Bank List Loading ── -->
     <div class="screen-group">
-      <div class="screen-label">
-        <span class="screen-number">4</span>
-        Payment Gateway - Confirm Details
-      </div>
+      <div class="screen-label"><span class="screen-number">2b</span>Order Confirmation – Đang tải ngân hàng</div>
       <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
           <span>9:41</span>
           <div class="status-icons">
             <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
+              <span style="height:4px"></span><span style="height:6px"></span>
+              <span style="height:8px"></span><span style="height:11px"></span>
             </div>
-            <span>📶</span>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
             <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
+              <div class="battery-body"><div class="battery-fill"></div></div>
               <div class="battery-tip"></div>
             </div>
           </div>
         </div>
         <div class="screen-content">
-          <div class="alepay-header">
-            <div class="alepay-logo">ALEPAY</div>
-            <div class="alepay-sub">Secure Payment Gateway</div>
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
           </div>
-
-          <div class="order-summary-card">
-            <div class="order-code">Order #ORD-2024-001234</div>
-            <div class="order-total">29,990,000 ₫</div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Card Number</label>
-            <input type="text" class="form-input" placeholder="1234 5678 9012 3456" value="4111 1111 1111 ****">
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Expiry Date</label>
-              <input type="text" class="form-input" placeholder="MM/YY" value="12/25">
-            </div>
-            <div class="form-group">
-              <label class="form-label">CVV</label>
-              <input type="text" class="form-input" placeholder="***" value="***">
-            </div>
-          </div>
-
-          <button class="pay-btn">Pay 4,998,334 ₫</button>
-          <div class="security-note">🔒 Your payment is secure and encrypted</div>
-
-          <div class="content-spacer"></div>
-        </div>
-        <div class="iphone-home-indicator"></div>
-      </div>
-    </div>
-
-    <!-- Screen 5: OTP Verification -->
-    <div class="screen-group">
-      <div class="screen-label">
-        <span class="screen-number">5</span>
-        OTP Verification
-      </div>
-      <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
-          <span>9:41</span>
-          <div class="status-icons">
-            <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <span>📶</span>
-            <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
-              <div class="battery-tip"></div>
-            </div>
-          </div>
-        </div>
-        <div class="screen-content">
-          <div class="alepay-header">
-            <div class="alepay-logo">ALEPAY</div>
-            <div class="alepay-sub">Secure Payment Gateway</div>
-          </div>
-
-          <div class="otp-section">
-            <div class="otp-title">Verify Your Identity</div>
-            <div class="otp-sub">Enter the 6-digit code sent to your phone ending in ***1234</div>
-            <div class="otp-boxes">
-              <input type="text" class="otp-box filled" maxlength="1" value="1">
-              <input type="text" class="otp-box filled" maxlength="1" value="2">
-              <input type="text" class="otp-box filled" maxlength="1" value="3">
-              <input type="text" class="otp-box filled" maxlength="1" value="4">
-              <input type="text" class="otp-box filled" maxlength="1" value="5">
-              <input type="text" class="otp-box" maxlength="1">
-            </div>
-            <div class="otp-resend">Resend code in 45 seconds</div>
-          </div>
-
-          <div class="content-spacer"></div>
-        </div>
-        <div class="iphone-home-indicator"></div>
-      </div>
-    </div>
-
-    <!-- Screen 6: Processing -->
-    <div class="screen-group">
-      <div class="screen-label">
-        <span class="screen-number">6</span>
-        Processing Payment
-      </div>
-      <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
-          <span>9:41</span>
-          <div class="status-icons">
-            <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <span>📶</span>
-            <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
-              <div class="battery-tip"></div>
-            </div>
-          </div>
-        </div>
-        <div class="screen-content">
-          <div class="alepay-header">
-            <div class="alepay-logo">ALEPAY</div>
-            <div class="alepay-sub">Secure Payment Gateway</div>
-          </div>
-          <div class="processing-overlay">
-            <div class="spinner"></div>
-            <div class="processing-label">Processing Payment</div>
-            <div class="processing-sub">Please wait...</div>
-          </div>
-        </div>
-        <div class="iphone-home-indicator"></div>
-      </div>
-    </div>
-
-    <!-- Screen 7: Success -->
-    <div class="screen-group">
-      <div class="screen-label">
-        <span class="screen-number">7</span>
-        Payment Successful
-      </div>
-      <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
-          <span>9:41</span>
-          <div class="status-icons">
-            <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <span>📶</span>
-            <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
-              <div class="battery-tip"></div>
-            </div>
-          </div>
-        </div>
-        <div class="screen-content">
-          <div class="result-page">
-            <div class="result-icon-circle success">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                <path d="M20 6L9 17l-5-5"/>
+                    <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
               </svg>
             </div>
-            <div class="result-heading">Payment Successful!</div>
-            <div class="result-order-code">Order #ORD-2024-001234</div>
-            <div class="card-saved-badge">
-              <span>💳</span>
-              <span>Card saved</span>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
             </div>
-            <button class="home-btn">Back to Home</button>
+          </div>
+                    <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <div class="bank-selector">
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+          </div>
+                    <div class="card-type-selector">
+            <div class="card-type-chip skel" style="width:52px">&nbsp;</div>
+            <div class="card-type-chip skel" style="width:72px">&nbsp;</div>
+            <div class="card-type-chip skel" style="width:40px">&nbsp;</div>
+            <div class="card-type-chip skel" style="width:52px">&nbsp;</div>
+          </div>
+                    <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown">
+              <span>20.990.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+            </div>
+          </div>
+                    <div class="installment-table-wrap">
+            <table class="installment-table">
+              <thead><tr>
+                <th style="width:28%"></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content-spacer"></div>
+                    <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">20.990.000đ</div>
+            </div>
+            <button class="footer-cta">Tiếp tục</button>
           </div>
         </div>
-        <div class="iphone-home-indicator"></div>
+                <div class="iphone-home-indicator"></div>
       </div>
     </div>
 
-    <!-- Screen 8: Failure -->
+    <!-- ── SCREEN 2c: Order Confirmation – Packages Loading ── -->
     <div class="screen-group">
-      <div class="screen-label">
-        <span class="screen-number">8</span>
-        Payment Failed
-      </div>
+      <div class="screen-label"><span class="screen-number">2c</span>Order Confirmation – Đang tải gói góp</div>
       <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="iphone-status-bar">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
           <span>9:41</span>
           <div class="status-icons">
             <div class="signal-bars">
-              <span></span><span></span><span></span><span></span>
+              <span style="height:4px"></span><span style="height:6px"></span>
+              <span style="height:8px"></span><span style="height:11px"></span>
             </div>
-            <span>📶</span>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
             <div class="battery-icon">
-              <div class="battery-body">
-                <div class="battery-fill"></div>
-              </div>
+              <div class="battery-body"><div class="battery-fill"></div></div>
               <div class="battery-tip"></div>
             </div>
           </div>
         </div>
         <div class="screen-content">
-          <div class="result-page">
-            <div class="result-icon-circle failure">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#757575" stroke-width="2">
-                <path d="M18 6L6 18M6 6l12 12"/>
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
+          </div>
+                    <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
               </svg>
             </div>
-            <div class="result-heading">Payment Failed</div>
-            <div class="result-order-code">Order #ORD-2024-001234</div>
-            <div style="text-align: center; font-size: 13px; color: #757575; margin-bottom: 16px;">
-              The payment was declined. Please check your card details and try again.
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
             </div>
-            <button class="home-btn">Retry Payment</button>
+          </div>
+                    <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <div class="bank-selector">
+            <div class="bank-chip selected"><div class="bank-chip-logo">VCB</div><div class="bank-chip-name">Vietcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">TCB</div><div class="bank-chip-name">Techcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">VPB</div><div class="bank-chip-name">VPBank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">ACB</div><div class="bank-chip-name">ACB</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">BID</div><div class="bank-chip-name">BIDV</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">MB</div><div class="bank-chip-name">MB Bank</div></div>
+          </div>
+                    <div class="card-type-selector">
+            <div class="card-type-chip selected">Visa</div>
+            <div class="card-type-chip">Mastercard</div>
+            <div class="card-type-chip">JCB</div>
+            <div class="card-type-chip">Napas</div>
+          </div>
+                    <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown">
+              <span>20.990.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+            </div>
+          </div>
+                    <div class="installment-table-wrap">
+            <table class="installment-table">
+              <thead><tr>
+                <th style="width:28%"></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content-spacer"></div>
+                    <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">20.990.000đ</div>
+            </div>
+            <button class="footer-cta">Tiếp tục</button>
           </div>
         </div>
-        <div class="iphone-home-indicator"></div>
+                <div class="iphone-home-indicator"></div>
       </div>
     </div>
-  </div>
-</body>
-</html>
+
+    <!-- ── SCREEN 2d: Order Confirmation – Below 500k ── -->
+    <div class="screen-group">
+      <div class="screen-label"><span class="screen-number">2d</span>Order Confirmation – Dưới ngưỡng 500k</div>
+      <div class="iphone-frame">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span><span style="height:6px"></span>
+              <span style="height:8px"></span><span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-content">
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
+          </div>
+                    <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
+            </div>
+          </div>
+                    <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <div class="bank-selector">
+            <div class="bank-chip selected"><div class="bank-chip-logo">VCB</div><div class="bank-chip-name">Vietcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">TCB</div><div class="bank-chip-name">Techcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">VPB</div><div class="bank-chip-name">VPBank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">ACB</div><div class="bank-chip-name">ACB</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">BID</div><div class="bank-chip-name">BIDV</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">MB</div><div class="bank-chip-name">MB Bank</div></div>
+          </div>
+                    <div class="card-type-selector">
+            <div class="card-type-chip selected">Visa</div>
+            <div class="card-type-chip">Mastercard</div>
+            <div class="card-type-chip">JCB</div>
+            <div class="card-type-chip">Napas</div>
+          </div>
+                    <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown" style="border-color:var(--gray-400)">
+              <span>450.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+            </div>
+          </div>
+          <div class="error-banner">
+            <span style="font-size:14px">&#9888;</span>
+            <span>Số tiền trả góp tối thiểu là 500.000đ</span>
+          </div>
+          <div class="empty-state-msg">Vui lòng chọn số tiền từ 500.000đ trở lên để xem các gói trả góp</div>
+          <div class="content-spacer"></div>
+                    <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">450.000đ</div>
+            </div>
+            <button class="footer-cta disabled">Tiếp tục</button>
+          </div>
+        </div>
+                <div class="iphone-home-indicator"></div>
+      </div>
+    </div>
+
+  </div><!-- /page-wrapper sg2 -->
