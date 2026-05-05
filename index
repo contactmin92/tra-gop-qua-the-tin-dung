@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FPT Shop – Trả góp qua thẻ tín dụng Wireframe</title>
+  <style>
+    /* ============================================================
+       1. CSS CUSTOM PROPERTIES (Design Tokens)
+    ============================================================ */
+    :root {
+      --white:    #ffffff;
+      --gray-50:  #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #eeeeee;
+      --gray-300: #e0e0e0;
+      --gray-400: #bdbdbd;
+      --gray-500: #9e9e9e;
+      --gray-600: #757575;
+      --gray-700: #616161;
+      --gray-800: #424242;
+      --gray-900: #212121;
+    }
+
+    /* ============================================================
+       2. RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--gray-100);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* ============================================================
+       3. PAGE LAYOUT
+    ============================================================ */
+    .page-header {
+      padding: 32px 48px 0;
+    }
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gray-900);
+      letter-spacing: -0.3px;
+    }
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin-top: 4px;
+    }
+    .page-wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+      padding: 32px 48px 60px;
+      overflow-x: auto;
+      min-height: 100vh;
+      align-items: flex-start;
+    }
+    /* Group separator label */
+    .group-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 48px;
+      margin-top: 8px;
+    }
+    .group-divider-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .group-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--gray-300);
+    }
+
+    /* ============================================================
+       4. SCREEN GROUP & IPHONE FRAME
+    ============================================================ */
+    .screen-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .screen-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-align: center;
+      max-width: 390px;
+      line-height: 1.5;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 6px 14px;
+    }
+    .screen-number {
+      display: inline-block;
+      background: var(--gray-900);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 1px 7px;
+      margin-right: 6px;
+    }
+    .iphone-frame {
+      width: 390px;
+      height: 844px;
+      border-radius: 44px;
+      border: 8px solid var(--gray-900);
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      flex-shrink: 0;
+    }
+    .iphone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 30px;
+      background: var(--gray-900);
+      border-radius: 0 0 20px 20px;
+      z-index: 10;
+    }
+    .iphone-status-bar {
+      height: 44px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 24px 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-900);
+      position: relative;
+      z-index: 5;
+    }
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+    }
+    .battery-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+    }
+    .battery-body {
+      width: 22px;
+      height: 11px;
+      border: 1.5px solid var(--gray-900);
+      border-radius: 2px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 1.5px;
+    }
+    .battery-fill {
+      width: 75%;
+      height: 100%;
+      background: var(--gray-900);
+      border-radius: 1px;
+    }
+    .battery-tip {
+      width: 2px;
+      height: 5px;
+      background: var(--gray-900);
+      border-radius: 0 1px 1px 0;
+    }
+    .signal-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 1.5px;
+      height: 11px;
+    }
+    .signal-bars span {
+      width: 3px;
+      background: var(--gray-900);
+      border-radius: 1px;
+    }
+    .screen-content {
+      height: calc(844px - 44px - 21px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .screen-content::-webkit-scrollbar { display: none; }
+    .iphone-home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: var(--gray-900);
+      border-radius: 3px;
+    }
+
+    /* ============================================================
+       5. NAVBAR
+    ============================================================ */
+    .navbar {
+      display: flex;
+      align-items: center;
+      height: 44px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      flex-shrink: 0;
+    }
+    .navbar-back {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--gray-900);
+      line-height: 1;
+    }
+    .navbar-title {
+      flex: 1;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+    .navbar-spacer {
+      width: 24px;
+    }
+
+    /* ============================================================
+       6. PRODUCT DETAIL SCREEN COMPONENTS
+    ============================================================ */
+    .product-image-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .product-image-placeholder svg {
+      opacity: 0.35;
+    }
+    .product-info {
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .product-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-900);
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .product-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .product-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .product-price-original {
+      font-size: 13px;
+      color: var(--gray-400);
+      text-decoration: line-through;
+    }
+    /* Payment method tabs */
+    .payment-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gray-200);
+      flex-shrink: 0;
+    }
+    .payment-tab {
+      flex: 1;
+      padding: 11px 8px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .payment-tab.active {
+      font-weight: 700;
+      color: var(--gray-900);
+      border-bottom-color: var(--gray-900);
+    }
+    /* Installment summary card (linked card state) */
+    .installment-summary-card {
+      margin: 14px 16px;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .card-bank-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .bank-logo-sm {
+      width: 24px;
+      height: 24px;
+      background: var(--gray-300);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .card-bank-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+    .card-number-badge {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--gray-500);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+    .card-monthly-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .card-monthly-amount {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .card-monthly-label {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+    .card-detail-link {
+      font-size: 12px;
+      color: var(--gray-600);
+      text-decoration: underline;
+    }
+    /* Link card prompt (unlinked state) */
+    .link-card-prompt {
+      margin: 14px 16px;
+      border: 1.5px dashed var(--gray-300);
+      border-radius: 10px;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .link-card-icon {
+      width: 36px;
+      height: 36px;
+      color: var(--gray-400);
+    }
+    .link-card-text {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.45;
+    }
+    .link-card-btn {
+      margin-top: 2px;
+      padding: 8px 18px;
+      border: 1.5px solid var(--gray-900);
+      border-radius: 8px;
+      background: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+    /* Other payment methods section */
+    .other-payments-section {
+      margin: 0 16px 14px;
+    }
+    .other-payments-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .other-payment-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .other-payment-row:last-child {
+      border-bottom: none;
+    }
+    .radio-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--gray-300);
+      flex-shrink: 0;
+    }
+    .other-payment-name {
+      font-size: 13px;
+      color: var(--gray-700);
+    }
+    /* Spacer to push footer down */
+    .content-spacer {
+      flex: 1;
+    }
+    /* Sticky footer */
+    .sticky-footer {
+      position: sticky;
+      bottom: 0;
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+    .footer-total-label {
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-bottom: 2px;
+    }
+    .footer-total-amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .footer-cta {
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: var(--gray-900);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      white-space: nowrap;
+    }
+    .footer-cta.full-width {
+      width: 100%;
+      text-align: center;
+    }
+    .footer-cta.disabled {
+      background: var(--gray-300);
+      color: var(--gray-500);
+    }
+
+    /* ============================================================
+       7. ORDER CONFIRMATION COMPONENTS
+    ============================================================ */
+    .product-summary-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--gray-200);
+      flex-shrink: 0;
+    }
+    .product-thumb {
+      width: 56px;
+      height: 56px;
+      background: var(--gray-200);
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-summary-info { flex: 1; }
+    .product-summary-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-900);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .product-summary-price {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .section-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+      padding: 14px 16px 8px;
+      border-bottom: 1px solid var(--gray-200);
+      flex-shrink: 0;
+    }
+    /* Bank selector */
+    .bank-selector {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 16px;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    .bank-selector::-webkit-scrollbar { display: none; }
+    .bank-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1.5px solid var(--gray-200);
+      background: var(--white);
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+    .bank-chip.selected {
+      border-color: var(--gray-900);
+      background: var(--gray-50);
+    }
+    .bank-chip-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--gray-300);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--gray-600);
+    }
+    .bank-chip-name {
+      font-size: 10px;
+      color: var(--gray-700);
+      white-space: nowrap;
+    }
+    /* Card type selector */
+    .card-type-selector {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    .card-type-selector::-webkit-scrollbar { display: none; }
+    .card-type-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--gray-200);
+      font-size: 12px;
+      color: var(--gray-700);
+      white-space: nowrap;
+      flex-shrink: 0;
+      background: var(--white);
+    }
+    .card-type-chip.selected {
+      border-color: var(--gray-900);
+      background: var(--gray-900);
+      color: var(--white);
+    }
+    /* Amount dropdown */
+    .amount-dropdown-wrap {
+      margin: 0 16px 12px;
+      flex-shrink: 0;
+    }
+    .amount-dropdown-label {
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-bottom: 5px;
+    }
+    .amount-dropdown {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+      background: var(--white);
+    }
+    .chevron-down {
+      width: 16px;
+      height: 16px;
+      color: var(--gray-500);
+    }
+    /* Installment table */
+    .installment-table-wrap {
+      padding: 0 16px 12px;
+      flex-shrink: 0;
+    }
+    .installment-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .installment-table th {
+      background: var(--gray-50);
+      padding: 7px 4px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--gray-900);
+      border: 1px solid var(--gray-200);
+      font-size: 11px;
+      vertical-align: bottom;
+    }
+    .installment-table th.best-col {
+      background: var(--gray-900);
+      color: var(--white);
+    }
+    .best-badge {
+      display: block;
+      background: var(--gray-600);
+      color: var(--white);
+      font-size: 8px;
+      padding: 1px 4px;
+      border-radius: 6px;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+    .installment-table td {
+      padding: 6px 4px;
+      text-align: center;
+      border: 1px solid var(--gray-200);
+      color: var(--gray-700);
+      font-size: 11px;
+    }
+    .installment-table td.row-label {
+      text-align: left;
+      padding-left: 6px;
+      color: var(--gray-600);
+      font-size: 10px;
+      background: var(--gray-50);
+    }
+    .installment-table tr.highlight-row td {
+      font-weight: 700;
+      color: var(--gray-900);
+      background: var(--gray-50);
+    }
+    .installment-table tr.highlight-row td.row-label {
+      font-weight: 600;
+    }
+    /* Promotion banner */
+    .promo-banner {
+      margin: 0 16px 12px;
+      padding: 10px 12px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--gray-700);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .promo-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    /* Error banner */
+    .error-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 16px 12px;
+      padding: 10px 12px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-400);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--gray-700);
+      flex-shrink: 0;
+    }
+    .empty-state-msg {
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-500);
+      padding: 24px 16px;
+    }
+
+    /* ============================================================
+       8. BOTTOM SHEET (Save Card)
+    ============================================================ */
+    .bottom-sheet-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 20;
+      display: flex;
+      align-items: flex-end;
+    }
+    .bottom-sheet {
+      width: 100%;
+      background: var(--white);
+      border-radius: 20px 20px 0 0;
+      padding: 12px 16px 32px;
+    }
+    .drag-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--gray-300);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+    .sheet-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .sheet-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--gray-200);
+      margin-bottom: 10px;
+    }
+    .sheet-option.selected {
+      border-color: var(--gray-900);
+      background: var(--gray-50);
+    }
+    .radio-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--gray-400);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .radio-dot.checked {
+      border-color: var(--gray-900);
+      background: var(--gray-900);
+      box-shadow: inset 0 0 0 3px var(--white);
+    }
+    .sheet-option-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 3px;
+    }
+    .sheet-option-sub {
+      font-size: 11px;
+      color: var(--gray-500);
+      line-height: 1.4;
+    }
+    .sheet-confirm-btn {
+      width: 100%;
+      height: 48px;
+      border-radius: 10px;
+      background: var(--gray-900);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       9. ALEPAY GATEWAY COMPONENTS
+    ============================================================ */
+    .alepay-header {
+      background: var(--gray-900);
+      padding: 14px 16px 16px;
+      flex-shrink: 0;
+    }
+    .alepay-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .alepay-sub {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+    .order-summary-card {
+      margin: 14px 16px;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 12px 14px;
+      flex-shrink: 0;
+    }
+    .order-code {
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-bottom: 4px;
+    }
+    .order-total {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .form-group {
+      margin: 0 16px 12px;
+      flex-shrink: 0;
+    }
+    .form-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-600);
+      margin-bottom: 5px;
+      display: block;
+    }
+    .form-input {
+      width: 100%;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: var(--gray-400);
+      background: var(--white);
+      font-family: inherit;
+    }
+    .form-row {
+      display: flex;
+      gap: 10px;
+      margin: 0 16px 12px;
+      flex-shrink: 0;
+    }
+    .form-row .form-group {
+      flex: 1;
+      margin: 0;
+    }
+    .pay-btn {
+      display: block;
+      width: calc(100% - 32px);
+      margin: 4px 16px 10px;
+      height: 48px;
+      border-radius: 10px;
+      background: var(--gray-900);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      flex-shrink: 0;
+    }
+    .security-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray-500);
+      padding: 0 16px 16px;
+      flex-shrink: 0;
+    }
+    /* OTP boxes */
+    .otp-section {
+      padding: 16px 16px 0;
+      flex-shrink: 0;
+    }
+    .otp-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 4px;
+    }
+    .otp-sub {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .otp-boxes {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .otp-box {
+      width: 40px;
+      height: 48px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-900);
+      background: var(--white);
+    }
+    .otp-box.filled {
+      border-color: var(--gray-900);
+      background: var(--gray-50);
+    }
+    .otp-resend {
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: 16px;
+    }
+    /* Processing overlay */
+    .processing-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.88);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 30;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid var(--gray-200);
+      border-top-color: var(--gray-900);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .processing-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+    .processing-sub {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-top: -8px;
+    }
+
+    /* ============================================================
+       10. SUCCESS / FAILURE PAGES
+    ============================================================ */
+    .result-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 16px;
+      flex: 1;
+    }
+    .result-icon-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .result-icon-circle.success { background: var(--gray-900); }
+    .result-icon-circle.failure { background: var(--gray-200); }
+    .result-heading {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--gray-900);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .result-order-code {
+      font-size: 13px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .card-saved-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--gray-700);
+      margin-bottom: 20px;
+    }
+    .order-details-card {
+      width: 100%;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .order-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 12px;
+    }
+    .order-detail-row:last-child { border-bottom: none; }
+    .order-detail-key { color: var(--gray-500); }
+    .order-detail-val { color: var(--gray-900); font-weight: 500; }
+    .order-detail-val.bold { font-weight: 700; }
+    .result-ctas {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .cta-primary {
+      width: 100%;
+      height: 48px;
+      border-radius: 10px;
+      background: var(--gray-900);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+    }
+    .cta-secondary {
+      width: 100%;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--gray-700);
+      font-size: 14px;
+      font-weight: 500;
+      border: 1.5px solid var(--gray-300);
+    }
+    .result-error-msg {
+      font-size: 13px;
+      color: var(--gray-600);
+      text-align: center;
+      line-height: 1.5;
+      padding: 0 8px;
+      margin-bottom: 6px;
+    }
+    .result-error-code {
+      font-size: 11px;
+      color: var(--gray-400);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* ============================================================
+       11. SKELETON / LOADING
+    ============================================================ */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .skeleton-box {
+      background: linear-gradient(
+        90deg,
+        var(--gray-200) 25%,
+        var(--gray-100) 50%,
+        var(--gray-200) 75%
+      );
+      background-size: 800px 100%;
+      animation: shimmer 1.4s infinite linear;
+      border-radius: 4px;
+      display: block;
+    }
+    .bank-chip.skel { border-color: var(--gray-200); }
+    .card-type-chip.skel {
+      border-color: var(--gray-200);
+      background: var(--gray-200);
+      color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1 class="page-title">Trả góp qua thẻ tín dụng – Wireframe</h1>
+    <p class="page-subtitle">FPT Shop Mobile App &nbsp;·&nbsp; Grayscale Mockup &nbsp;·&nbsp; 12 Screen States</p>
+  </div>
+
+  <!-- ============================================================
+       SCREEN GROUP 1: PRODUCT DETAIL
+  ============================================================ -->
+  <div class="group-divider">
+    <span class="group-divider-label">Screen Group 1 — Product Detail</span>
+    <span class="group-divider-line"></span>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- ── SCREEN 1a: Product Detail – Có thẻ liên kết ── -->
+    <div class="screen-group">
+      <div class="screen-label">
+        <span class="screen-number">1a</span>Product Detail – Có thẻ liên kết
+      </div>
+      <div class="iphone-frame">
+        <div class="iphone-notch"></div>
+
+        <!-- Status Bar -->
+        <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span>
+              <span style="height:6px"></span>
+              <span style="height:8px"></span>
+              <span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen Content -->
+        <div class="screen-content">
+
+          <!-- Navbar -->
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Chi tiết sản phẩm</div>
+            <div class="navbar-spacer"></div>
+          </div>
+
+          <!-- Product Image -->
+          <div class="product-image-placeholder">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="8" y="12" width="40" height="32" rx="3" stroke="#9e9e9e" stroke-width="2"/>
+              <circle cx="21" cy="24" r="5" stroke="#9e9e9e" stroke-width="2"/>
+              <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#9e9e9e" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <div class="product-name">iPhone 15 Pro Max 256GB<br>Titan Tự Nhiên</div>
+            <div class="product-price-row">
+              <span class="product-price">28.990.000đ</span>
+              <span class="product-price-original">32.990.000đ</span>
+            </div>
+          </div>
+
+          <!-- Payment Method Tabs -->
+          <div class="payment-tabs">
+            <div class="payment-tab">Trả thẳng</div>
+            <div class="payment-tab active">Trả góp qua thẻ</div>
+          </div>
+
+          <!-- Installment Summary Card (Linked Card) -->
+          <div class="installment-summary-card">
+            <div class="card-bank-row">
+              <div class="bank-logo-sm"></div>
+              <span class="card-bank-name">Vietcombank</span>
+              <span class="card-number-badge">•••• 4242 Visa</span>
+            </div>
+            <div class="card-monthly-row">
+              <span class="card-monthly-amount">Từ 874.583đ/tháng</span>
+              <span class="card-monthly-label">trong 24 tháng</span>
+            </div>
+            <div>
+              <span class="card-detail-link">Xem chi tiết ›</span>
+            </div>
+          </div>
+
+          <!-- Other payment options (collapsed rows) -->
+          <div class="other-payments-section">
+            <div class="other-payments-label">Phương thức khác</div>
+            <div class="other-payment-row">
+              <div class="radio-circle"></div>
+              <span class="other-payment-name">Trả góp 0% qua công ty tài chính</span>
+            </div>
+            <div class="other-payment-row">
+              <div class="radio-circle"></div>
+              <span class="other-payment-name">Ví điện tử / QR Pay</span>
+            </div>
+          </div>
+
+          <div class="content-spacer"></div>
+
+          <!-- Sticky Footer -->
+          <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">28.990.000đ</div>
+            </div>
+            <button class="footer-cta">Mua trả góp</button>
+          </div>
+
+        </div><!-- /screen-content -->
+        <div class="iphone-home-indicator"></div>
+      </div><!-- /iphone-frame -->
+    </div><!-- /screen-group 1a -->
+
+
+    <!-- ── SCREEN 1b: Product Detail – Chưa liên kết thẻ ── -->
+    <div class="screen-group">
+      <div class="screen-label">
+        <span class="screen-number">1b</span>Product Detail – Chưa liên kết thẻ
+      </div>
+      <div class="iphone-frame">
+        <div class="iphone-notch"></div>
+
+        <!-- Status Bar -->
+        <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span>
+              <span style="height:6px"></span>
+              <span style="height:8px"></span>
+              <span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen Content -->
+        <div class="screen-content">
+
+          <!-- Navbar -->
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Chi tiết sản phẩm</div>
+            <div class="navbar-spacer"></div>
+          </div>
+
+          <!-- Product Image -->
+          <div class="product-image-placeholder">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="8" y="12" width="40" height="32" rx="3" stroke="#9e9e9e" stroke-width="2"/>
+              <circle cx="21" cy="24" r="5" stroke="#9e9e9e" stroke-width="2"/>
+              <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#9e9e9e" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <div class="product-name">iPhone 15 Pro Max 256GB<br>Titan Tự Nhiên</div>
+            <div class="product-price-row">
+              <span class="product-price">28.990.000đ</span>
+              <span class="product-price-original">32.990.000đ</span>
+            </div>
+          </div>
+
+          <!-- Payment Method Tabs -->
+          <div class="payment-tabs">
+            <div class="payment-tab">Trả thẳng</div>
+            <div class="payment-tab active">Trả góp qua thẻ</div>
+          </div>
+
+          <!-- Link Card Prompt (Unlinked State) -->
+          <div class="link-card-prompt">
+            <!-- Credit card SVG icon -->
+            <svg class="link-card-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="8" width="32" height="20" rx="3"/>
+              <line x1="2" y1="15" x2="34" y2="15"/>
+              <line x1="7" y1="22" x2="13" y2="22"/>
+              <line x1="17" y1="22" x2="20" y2="22"/>
+            </svg>
+            <div class="link-card-text">
+              Liên kết thẻ tín dụng để xem<br>ưu đãi trả góp hấp dẫn
+            </div>
+            <button class="link-card-btn">Liên kết thẻ ngay</button>
+          </div>
+
+          <!-- Other payment options -->
+          <div class="other-payments-section">
+            <div class="other-payments-label">Phương thức khác</div>
+            <div class="other-payment-row">
+              <div class="radio-circle"></div>
+              <span class="other-payment-name">Trả góp 0% qua công ty tài chính</span>
+            </div>
+            <div class="other-payment-row">
+              <div class="radio-circle"></div>
+              <span class="other-payment-name">Ví điện tử / QR Pay</span>
+            </div>
+          </div>
+
+          <div class="content-spacer"></div>
+
+          <!-- Sticky Footer -->
+          <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">28.990.000đ</div>
+            </div>
+            <button class="footer-cta">Mua trả góp</button>
+          </div>
+
+        </div><!-- /screen-content -->
+        <div class="iphone-home-indicator"></div>
+      </div><!-- /iphone-frame -->
+    </div><!-- /screen-group 1b -->
+
+  </div><!-- /page-wrapper -->
+
+  </div><!-- /page-wrapper sg1 -->
+
+  <!-- ============================================================
+       SCREEN GROUP 2: ORDER CONFIRMATION
+  ============================================================ -->
+  <div class="group-divider" style="margin-top:40px">
+    <span class="group-divider-label">Screen Group 2 — Order Confirmation</span>
+    <span class="group-divider-line"></span>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- ── SCREEN 2a: Order Confirmation – Bình thường ── -->
+    <div class="screen-group">
+      <div class="screen-label"><span class="screen-number">2a</span>Order Confirmation – Bình thường</div>
+      <div class="iphone-frame">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span>
+              <span style="height:6px"></span>
+              <span style="height:8px"></span>
+              <span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-content">
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
+          </div>
+                    <!-- Product Summary -->
+          <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
+            </div>
+          </div>
+                    <!-- Section Header -->
+          <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <!-- Bank Selector -->
+          <div class="bank-selector">
+            <div class="bank-chip selected">
+              <div class="bank-chip-logo">VCB</div>
+              <div class="bank-chip-name">Vietcombank</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">TCB</div>
+              <div class="bank-chip-name">Techcombank</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">VPB</div>
+              <div class="bank-chip-name">VPBank</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">ACB</div>
+              <div class="bank-chip-name">ACB</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">BID</div>
+              <div class="bank-chip-name">BIDV</div>
+            </div>
+            <div class="bank-chip">
+              <div class="bank-chip-logo">MB</div>
+              <div class="bank-chip-name">MB Bank</div>
+            </div>
+          </div>
+                    <!-- Card Type Selector -->
+          <div class="card-type-selector">
+            <div class="card-type-chip selected">Visa</div>
+            <div class="card-type-chip">Mastercard</div>
+            <div class="card-type-chip">JCB</div>
+            <div class="card-type-chip">Napas</div>
+          </div>
+                    <!-- Amount Dropdown -->
+          <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown">
+              <span>20.990.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2">
+                <polyline points="4,6 8,10 12,6"/>
+              </svg>
+            </div>
+          </div>
+                    <!-- Installment Term Table -->
+          <div class="installment-table-wrap">
+            <table class="installment-table">
+              <thead>
+                <tr>
+                  <th style="width:28%"></th>
+                  <th>3 tháng</th>
+                  <th>6 tháng</th>
+                  <th class="best-col"><span class="best-badge">Thấp nhất</span>12 tháng</th>
+                  <th>24 tháng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="row-label">Giá mua TG</td>
+                  <td>20.990k</td><td>20.990k</td><td>20.990k</td><td>20.990k</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Tổng giảm giá</td>
+                  <td>-500k</td><td>-300k</td><td>-200k</td><td>0đ</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Tổng tiền TG</td>
+                  <td>20.490k</td><td>20.690k</td><td>20.790k</td><td>20.990k</td>
+                </tr>
+                <tr>
+                  <td class="row-label">TT khi nhận</td>
+                  <td>0đ</td><td>0đ</td><td>0đ</td><td>0đ</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td class="row-label">Góp/tháng</td>
+                  <td>6.830k</td><td>3.448k</td><td>1.733k</td><td>875k</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Chênh lệch</td>
+                  <td>-500k</td><td>-300k</td><td>-200k</td><td>0đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+                    <!-- Promotion Banner -->
+          <div class="promo-banner">
+            <span class="promo-icon">🏷</span>
+            <span>Ưu đãi: Giảm thêm 200.000đ khi trả góp 12 tháng qua Vietcombank</span>
+          </div>
+          <div class="content-spacer"></div>
+                    <!-- Sticky Footer -->
+          <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">20.990.000đ</div>
+            </div>
+            <button class="footer-cta">Tiếp tục</button>
+          </div>
+        </div>
+                <div class="iphone-home-indicator"></div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 2b: Order Confirmation – Bank List Loading ── -->
+    <div class="screen-group">
+      <div class="screen-label"><span class="screen-number">2b</span>Order Confirmation – Đang tải ngân hàng</div>
+      <div class="iphone-frame">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span><span style="height:6px"></span>
+              <span style="height:8px"></span><span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-content">
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
+          </div>
+                    <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
+            </div>
+          </div>
+                    <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <div class="bank-selector">
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+            <div class="bank-chip skel" style="min-width:60px;height:72px;justify-content:center">
+              <span class="skeleton-box" style="width:32px;height:32px;border-radius:6px"></span>
+              <span class="skeleton-box" style="width:36px;height:10px;margin-top:4px"></span>
+            </div>
+          </div>
+                    <div class="card-type-selector">
+            <div class="card-type-chip skel" style="width:52px">&nbsp;</div>
+            <div class="card-type-chip skel" style="width:72px">&nbsp;</div>
+            <div class="card-type-chip skel" style="width:40px">&nbsp;</div>
+            <div class="card-type-chip skel" style="width:52px">&nbsp;</div>
+          </div>
+                    <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown">
+              <span>20.990.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+            </div>
+          </div>
+                    <div class="installment-table-wrap">
+            <table class="installment-table">
+              <thead><tr>
+                <th style="width:28%"></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content-spacer"></div>
+                    <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">20.990.000đ</div>
+            </div>
+            <button class="footer-cta">Tiếp tục</button>
+          </div>
+        </div>
+                <div class="iphone-home-indicator"></div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 2c: Order Confirmation – Packages Loading ── -->
+    <div class="screen-group">
+      <div class="screen-label"><span class="screen-number">2c</span>Order Confirmation – Đang tải gói góp</div>
+      <div class="iphone-frame">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span><span style="height:6px"></span>
+              <span style="height:8px"></span><span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-content">
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
+          </div>
+                    <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
+            </div>
+          </div>
+                    <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <div class="bank-selector">
+            <div class="bank-chip selected"><div class="bank-chip-logo">VCB</div><div class="bank-chip-name">Vietcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">TCB</div><div class="bank-chip-name">Techcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">VPB</div><div class="bank-chip-name">VPBank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">ACB</div><div class="bank-chip-name">ACB</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">BID</div><div class="bank-chip-name">BIDV</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">MB</div><div class="bank-chip-name">MB Bank</div></div>
+          </div>
+                    <div class="card-type-selector">
+            <div class="card-type-chip selected">Visa</div>
+            <div class="card-type-chip">Mastercard</div>
+            <div class="card-type-chip">JCB</div>
+            <div class="card-type-chip">Napas</div>
+          </div>
+                    <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown">
+              <span>20.990.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+            </div>
+          </div>
+                    <div class="installment-table-wrap">
+            <table class="installment-table">
+              <thead><tr>
+                <th style="width:28%"></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+                <th><span class="skeleton-box" style="width:40px;height:14px;display:inline-block"></span></th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+                <tr><td class="row-label"><span class="skeleton-box" style="width:50px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                  <td><span class="skeleton-box" style="width:38px;height:10px;display:inline-block"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content-spacer"></div>
+                    <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">20.990.000đ</div>
+            </div>
+            <button class="footer-cta">Tiếp tục</button>
+          </div>
+        </div>
+                <div class="iphone-home-indicator"></div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 2d: Order Confirmation – Below 500k ── -->
+    <div class="screen-group">
+      <div class="screen-label"><span class="screen-number">2d</span>Order Confirmation – Dưới ngưỡng 500k</div>
+      <div class="iphone-frame">
+                <div class="iphone-notch"></div>
+                <div class="iphone-status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <div class="signal-bars">
+              <span style="height:4px"></span><span style="height:6px"></span>
+              <span style="height:8px"></span><span style="height:11px"></span>
+            </div>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+              <path d="M7.5 2.2C9.8 2.2 11.9 3.1 13.4 4.6L14.8 3.2C12.9 1.2 10.3 0 7.5 0C4.7 0 2.1 1.2 0.2 3.2L1.6 4.6C3.1 3.1 5.2 2.2 7.5 2.2Z" fill="#212121"/>
+              <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7L12.7 5.6C11.3 4.3 9.5 3.5 7.5 3.5C5.5 3.5 3.7 4.3 2.3 5.6L3.7 7C4.7 6.1 6 5.5 7.5 5.5Z" fill="#212121"/>
+              <circle cx="7.5" cy="9.5" r="1.5" fill="#212121"/>
+            </svg>
+            <div class="battery-icon">
+              <div class="battery-body"><div class="battery-fill"></div></div>
+              <div class="battery-tip"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-content">
+          <div class="navbar">
+            <div class="navbar-back">&#8249;</div>
+            <div class="navbar-title">Xác nhận đặt hàng</div>
+            <div class="navbar-spacer"></div>
+          </div>
+                    <div class="product-summary-row">
+            <div class="product-thumb">
+              <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
+                <rect x="8" y="12" width="40" height="32" rx="3" stroke="#bdbdbd" stroke-width="2"/>
+                <circle cx="21" cy="24" r="5" stroke="#bdbdbd" stroke-width="2"/>
+                <path d="M8 36L18 26L26 34L34 24L48 36" stroke="#bdbdbd" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="product-summary-info">
+              <div class="product-summary-name">iPhone 15 Pro Max 256GB</div>
+              <div class="product-summary-price">28.990.000đ</div>
+            </div>
+          </div>
+                    <div class="section-header">Trả góp qua thẻ tín dụng ▾</div>
+                    <div class="bank-selector">
+            <div class="bank-chip selected"><div class="bank-chip-logo">VCB</div><div class="bank-chip-name">Vietcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">TCB</div><div class="bank-chip-name">Techcombank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">VPB</div><div class="bank-chip-name">VPBank</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">ACB</div><div class="bank-chip-name">ACB</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">BID</div><div class="bank-chip-name">BIDV</div></div>
+            <div class="bank-chip"><div class="bank-chip-logo">MB</div><div class="bank-chip-name">MB Bank</div></div>
+          </div>
+                    <div class="card-type-selector">
+            <div class="card-type-chip selected">Visa</div>
+            <div class="card-type-chip">Mastercard</div>
+            <div class="card-type-chip">JCB</div>
+            <div class="card-type-chip">Napas</div>
+          </div>
+                    <div class="amount-dropdown-wrap">
+            <div class="amount-dropdown-label">Số tiền trả góp</div>
+            <div class="amount-dropdown" style="border-color:var(--gray-400)">
+              <span>450.000đ</span>
+              <svg class="chevron-down" viewBox="0 0 16 16" fill="none" stroke="#9e9e9e" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+            </div>
+          </div>
+          <div class="error-banner">
+            <span style="font-size:14px">&#9888;</span>
+            <span>Số tiền trả góp tối thiểu là 500.000đ</span>
+          </div>
+          <div class="empty-state-msg">Vui lòng chọn số tiền từ 500.000đ trở lên để xem các gói trả góp</div>
+          <div class="content-spacer"></div>
+                    <div class="sticky-footer">
+            <div>
+              <div class="footer-total-label">Tổng cộng</div>
+              <div class="footer-total-amount">450.000đ</div>
+            </div>
+            <button class="footer-cta disabled">Tiếp tục</button>
+          </div>
+        </div>
+                <div class="iphone-home-indicator"></div>
+      </div>
+    </div>
+
+  </div><!-- /page-wrapper sg2 -->
